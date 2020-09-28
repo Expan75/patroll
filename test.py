@@ -22,7 +22,11 @@ def format_query_url(page_n=1, n_results=100):
 
 def parse_row(row):
     data = [
-        td.text.strip().replace("  ", "").replace("\n", "").replace("\r", "")
+        td.text.strip()
+        .replace("  ", "")
+        .replace("\n", "")
+        .replace("\r", "")
+        .replace(",", "")
         for td in row.find_all("td")
     ]
     return data
@@ -49,7 +53,7 @@ while True:
             row_data = parse_row(row)[2:]
             # encase title in single brackets
             row_data[2] = "'" + row_data[2] + "'"
-            data.append(",".join(row_data))
+            data.append(",".join(row_data) + "\n")
 
         # also skips first to datapoints in each row (number & img if active)
         # get hash of first parsed row
